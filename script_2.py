@@ -2,9 +2,12 @@ import logging
 import whisper
 import pandas as pd
 
+# Configuración básica del logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 model = whisper.load_model('large')  # cargamos el modelo grande de Whisper
-logging.info("Modelo whisper cargado")
+logger.info("Modelo whisper cargado")
 
 # como sabemos que el audio está en castellano indicamos el lenguaje
 response = model.transcribe(
@@ -12,6 +15,7 @@ response = model.transcribe(
     language="es",
     verbose=True
 )
+logger.info("Transcripción realizada")
 
 d = {"texto": response["text"]}
 df = pd.DataFrame(d, index=[0])
